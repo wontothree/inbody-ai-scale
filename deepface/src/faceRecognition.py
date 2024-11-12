@@ -1,4 +1,5 @@
 from deepface import DeepFace
+
 import numpy as np
 
 class FaceRecognition:
@@ -30,5 +31,4 @@ class FaceRecognition:
 if __name__ == "__main__":
     face_recognition = FaceRecognition()
 
-    print(face_recognition.generate_embedding("./deepface/imgs/111111.png"))
-
+    # print(face_recognition.generate_embedding("./deepface/imgs/111111.png"))

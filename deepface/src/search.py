@@ -27,8 +27,6 @@ class Search:
 
         return names[max_index]
 
-
-
 if __name__ == "__main__":
     search = Search()
     capture = Capture()
@@ -36,10 +34,16 @@ if __name__ == "__main__":
     firebase = FireBase()
 
     # capture user image
-    capture.capture_photo('./deepface/search_imgs/tmp.png')
+    # capture.capture_photo('./deepface/search_imgs/tmp.png')
+
+    # download user image
+    firebase.download_image_from_firebase_storage(
+        'search_imgs/tmp.png',
+        'downloaded_imgs/downloaded_tmp.png'
+    )
 
     # extract embedding
-    embedding = face_recognition.generate_embedding('./deepface/search_imgs/tmp.png')
+    embedding = face_recognition.generate_embedding('downloaded_imgs/downloaded_tmp.png')
 
     # download all user data from firebase
     dataset = firebase.get_all_data_from_firebase()

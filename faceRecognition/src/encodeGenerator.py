@@ -3,8 +3,6 @@ import cv2
 import face_recognition
 import pickle
 
-from firebase import FireBase
-
 class EncodeGenerator:
     def __init__(self):
         # Firebase 초기화

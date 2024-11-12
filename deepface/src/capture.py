@@ -1,10 +1,13 @@
 import cv2
+import time
+
+from firebase import FireBase
 
 class Capture:
     def __init__(self):
         pass
 
-    def capture_photo(self, filename='./registration_imgs/tmp.png'):
+    def capture_photo(self, filename='search_imgs/tmp.png'):
         # 카메라 초기화
         cap = cv2.VideoCapture(0)  # 0은 기본 카메라를 의미합니다.
 
@@ -38,3 +41,15 @@ class Capture:
                 break
         
         print("complete capture")
+
+
+if __name__ == "__main__":
+    capture = Capture()
+    firebase = FireBase()
+
+    # capture face image
+    capture.capture_photo()
+
+    time.sleep(3)
+
+    firebase.upload_image_to_firebase_storage('search_imgs/tmp.png')
