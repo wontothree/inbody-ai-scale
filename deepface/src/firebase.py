@@ -3,10 +3,12 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db, storage
 
+service_account_key_json_path = '/Users/kevinliam/Desktop/anthony/development/inbody-ai-scale/faceRecognition/src/serviceAccountKey.json'
+
 class FireBase():
     def __init__(self):
         if not firebase_admin._apps:
-            cred = credentials.Certificate("/Users/kevinliam/Desktop/anthony/development/inbody-ai-scale/faceRecognition/src/serviceAccountKey.json")
+            cred = credentials.Certificate(service_account_key_json_path)
             firebase_admin.initialize_app(cred, {
                 'databaseURL': "https://inbody-scale-ai-default-rtdb.firebaseio.com/",
                 'storageBucket': "inbody-scale-ai.appspot.com"}
