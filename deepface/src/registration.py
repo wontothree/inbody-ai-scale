@@ -1,4 +1,6 @@
 import time
+from datetime import datetime
+import uuid
 
 from capture import Capture
 from firebase import FireBase
@@ -9,16 +11,17 @@ class Registration:
         self.data = {}
 
     def input_user_info(self):
-        index = input("Index: ")
+        user_uuid = str(uuid.uuid4())
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         name = input("Name: ")
         sex = input("Sex: ")
         age = input("Age: ")
         
-        return index, name, sex, age
+        return user_uuid, timestamp, name, sex, age
     
-    def save_user_info(self, index, name, sex, age, embedding):
-        # 사용자 정보를 딕셔너리에 저장
-        self.data[index] = {
+    def save_user_info(self, user_uuid, timestamp, name, sex, age, embedding):
+        self.data[user_uuid] = {
+            "time": timestamp,
             "name": name,
             "sex": sex,
             "age": age,
@@ -34,18 +37,23 @@ if __name__ == "__main__":
     face_recognition = FaceRecognition()
 
     # input user information
-    index, name, sex, age = face_registration.input_user_info()
+    user_uuid, timestamp, name, sex, age = face_registration.input_user_info()
+
+    img_path = f'./registration_imgs/{user_uuid}.png'
 
     # capture face image
-    capture.capture_photo(f'./deepface/registration_imgs/{index}.png')
+    capture.capture_photo(img_path)
 
-    time.sleep(4)
+    time.sleep(3)
 
     # generate embedding
-    embedding = face_recognition.generate_embedding(f'./deepface/registration_imgs/{index}.png')
+    embedding = face_recognition.generate_embedding(img_path)
 
     # save user information
-    face_registration.save_user_info(index, name, sex, age, embedding)
+    face_registration.save_user_info(user_uuid, timestamp, name, sex, age, embedding)
 
-    # upload to firebase
+    # upload data to firebase 
     firebase.upload_data_to_firebase(face_registration.data)
+
+    # upload image to firebase
+    # firebase.upload_image_to_firebase_storage(img_path)

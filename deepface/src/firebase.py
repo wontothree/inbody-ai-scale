@@ -19,7 +19,7 @@ class FireBase():
         self.bucket = self.storage.bucket()
 
     def upload_data_to_firebase(self, data):
-        ref = self.db.reference('Person')
+        ref = self.db.reference('Face')
         
         for key, value in data.items():
             ref.child(key).set(value)
@@ -34,6 +34,14 @@ class FireBase():
             print(f"Image {image_path} uploaded successfully to Firebase Storage.")
         else:
             print(f"Error: The file {image_path} does not exist.")
+
+    def upload_inbody_data(self, inbody_data):
+        ref = self.db.reference('InBody')
+        
+        for key, value in inbody_data.items():
+            ref.child(key).set(value)
+        
+        print("complete uploading data to firebase")
 
     def download_image_from_firebase_storage(self, storage_path, download_path):
         if storage_path:
@@ -55,7 +63,7 @@ class FireBase():
             print(f"Error: Storage path {storage_path} not found.")
 
     def get_all_data_from_firebase(self):
-        ref = self.db.reference("Person")
+        ref = self.db.reference("Face")
 
         data = ref.get()
 

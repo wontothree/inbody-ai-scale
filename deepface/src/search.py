@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from capture import Capture
 from faceRecognition import FaceRecognition
 from firebase import FireBase
@@ -6,7 +8,7 @@ class Search:
     def __init__(self):
         self.face_recognition = FaceRecognition()
 
-    def search_user(self, embedding, dataset):
+    def search_max_cosine_similarity_user(self, embedding, dataset):
         cosine_similarity_list = []
         names = []
         for data in dataset:
@@ -20,12 +22,28 @@ class Search:
         
         similarity_results = list(zip(names, cosine_similarity_list))
 
+        # print 
         for name, similarity in similarity_results:
             print(f"Name: {name}, Cosine Similarity: {similarity}")
 
         max_index = cosine_similarity_list.index(max(cosine_similarity_list))
 
         return names[max_index]
+
+    def search_recent_threshold_user(self, embedding, dataset):
+
+        sorted_data = sorted(
+            dataset.values(), 
+            key=lambda x: datetime.strptime(x["time"], "%Y-%m-%d %H:%M:%S"), 
+            reverse=True
+        )
+
+        for data in sorted_data:
+            data_embedding = data["embedding"]
+            cosine_similarity = self.face_recognition.generate_cosine_similarity(embedding, data_embedding)
+
+            if (cosine_similarity >= 50):
+                return data["name"]
 
 if __name__ == "__main__":
     search = Search()
@@ -37,10 +55,10 @@ if __name__ == "__main__":
     # capture.capture_photo('./deepface/search_imgs/tmp.png')
 
     # download user image
-    firebase.download_image_from_firebase_storage(
-        'search_imgs/tmp.png',
-        'downloaded_imgs/downloaded_tmp.png'
-    )
+    # firebase.download_image_from_firebase_storage(
+    #     'search_imgs/tmp.png',
+    #     'downloaded_imgs/downloaded_tmp.png'
+    # )
 
     # extract embedding
     embedding = face_recognition.generate_embedding('downloaded_imgs/downloaded_tmp.png')
@@ -49,6 +67,7 @@ if __name__ == "__main__":
     dataset = firebase.get_all_data_from_firebase()
 
     # search
-    user_name = search.search_user(embedding, dataset)
+    # user_name = search.search_max_cosine_similarity_user(embedding, dataset)
+    user_name = search.search_recent_threshold_user(embedding, dataset)
 
-    print("result", user_name)
+    print("result: ", user_name)
