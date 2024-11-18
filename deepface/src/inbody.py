@@ -16,13 +16,15 @@ if __name__ == "__main__":
     bmi = 1
     body_fat_percentage = 1
     body_fat_mass = 1
+    skeletal_muscle_mass = 1
 
     inbody.inbody_data[user_uuid] = {
         "height": height,
         "weight": weight,
         "bmi": bmi,
         "body_fat_percentage": body_fat_percentage,
-        "body_fat_mass": body_fat_mass
+        "body_fat_mass": body_fat_mass,
+        "skeletal_muscle_mass": skeletal_muscle_mass
     }
 
     # upload data to firebase 
