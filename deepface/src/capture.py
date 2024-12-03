@@ -4,10 +4,27 @@ import time
 from firebase import FireBase
 
 class Capture:
-    def __init__(self):
-        pass
-
     def capture_photo(self, filename='search_imgs/tmp.png'):
+        """
+        capture_photo(self, filename='search_imgs/tmp.png')
+
+        This function captures a photo using the camera and provides an interface for the user to decide whether to save it. 
+        By default, the captured image is saved to the specified file path.
+
+        Parameters:
+        - filename (str): The file path and name where the photo will be saved (default: 'search_imgs/tmp.png').
+
+        Functionality:
+        1. Initializes the camera and checks if it is accessible.
+        2. Guides the user to press 's' to save the photo or 'q' to exit without saving.
+        3. Continuously reads frames from the camera and displays them on the screen.
+        4. If the user presses 's', the photo is saved to the specified path, and the process exits.
+        5. If the user presses 'q', the process exits without saving.
+
+        Note:
+        - The file save operation may fail if the specified directory does not exist.
+        """
+
         # 카메라 초기화
         cap = cv2.VideoCapture(0)  # 0은 기본 카메라를 의미합니다.
 

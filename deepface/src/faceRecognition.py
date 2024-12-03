@@ -8,7 +8,7 @@ class FaceRecognition:
 
     def generate_embedding(self, img_path):
         object = DeepFace.represent(
-            img_path = img_path, model_name="Facenet", detector_backend="opencv"
+            img_path = img_path, model_name="Facenet512", detector_backend="opencv"
         )
 
         embedding = object[0]["embedding"]
