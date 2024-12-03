@@ -116,7 +116,7 @@ class Search:
             data_embedding = data["embedding"]
             cosine_similarity = self.face_recognition.generate_cosine_similarity(embedding, data_embedding)
 
-            if (cosine_similarity >= RECENT_THRESHOLD):
+            if (cosine_similarity > RECENT_THRESHOLD):
                 return user_uuid, data["name"]
         
         return self.search_max_cosine_similarity_user(embedding, dataset)
@@ -137,7 +137,7 @@ if __name__ == "__main__":
     # )
 
     # path of target image
-    img_path = '/Users/kevinliam/Desktop/anthony/development/inbody-ai-scale/deepface/search_imgs/chagichul.png'
+    img_path = '/Users/kevinliam/Desktop/anthony/development/inbody-ai-scale/deepface/search_imgs/jickwon.jpeg'
     
     # extract embedding
     embedding = face_recognition.generate_embedding(img_path)
@@ -146,6 +146,7 @@ if __name__ == "__main__":
     dataset = firebase.get_all_data_from_firebase()
 
     # search max cosine similarity
+    # for log
     # search.search_max_cosine_similarity_user(embedding, dataset)
 
     # search

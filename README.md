@@ -1,6 +1,8 @@
 # InBody Scale AI
 
-![](./icons/inbody-ai-scale.png)
+Video
+
+[![](./icons/inbody-ai-scale.png)](https://www.youtube.com/watch?v=Tl672RUQyMU)
 
 - Height estimation solution using a low performance monocular camera and limied computing resources.
 - Face Identification solution along with the pipeline and database
